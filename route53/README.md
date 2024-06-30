@@ -1,0 +1,22 @@
+- `create_r53_hosted_zone_w_white_label_ns.sh`
+    - Creates or updates a hosted zone and sets it up to use white-label name servers
+    - Steps:
+        - Looks for an existing reusable delegation set by provided caller reference and creates a new one if not found.
+        - Looks for an existing hosted zone by provided caller reference and creates a new one if not found.
+        - Creates A and AAAA records for white label name servers named "ns(1-4).domain.com", TTL=900
+        - Updates NS and SOA records
+    - Usage:
+        - update environment variables in the script:
+            - `DELEG_SET_CALLER_REF` - any unique static value
+            - `HOSTED_ZONE_CALLER_REF` - any unique static value
+            - `DOMAIN_NAME` - domain name
+        - run: `create_r53_hosted_zone_w_white_label_ns.sh`
+
+- `update_r53_domain_ns_w_white_label_ns.sh`
+    - Update name servers (delegation) of the specified AWS Route53 domain with the white-label name servers of the specified hosted zone
+    - White label name servers will be named "ns(1-4).domain.com" - this should match with NS records in the hosted zone
+    - Usage:
+        - update environment variables in the script:
+            - `HOSTED_ZONE_ID` - hosted zone id
+            - `DOMAIN_NAME` - domain name
+        - run: `update_r53_domain_ns_w_white_label_ns.sh`
